@@ -119,11 +119,13 @@
   .discord-cta{margin-top:30px;display:inline-flex;align-items:center;gap:10px;border:1px solid rgba(88,101,242,.4);background:rgba(88,101,242,.12);color:#c9cdf7;border-radius:999px;padding:10px 18px;font-size:13px;font-weight:500;cursor:pointer;transition:.18s;text-decoration:none;}
   .discord-cta:hover{background:rgba(88,101,242,.2);border-color:rgba(88,101,242,.6);transform:translateY(-2px);}
   .discord-cta svg{width:18px;height:18px;}
-  .feed-wrap{margin-top:36px;width:100%;max-width:760px;}
+  .feed-wrap{margin-top:36px;width:100%;max-width:100%;}
   .feed-title{font-family:"Roboto Mono",monospace;font-size:11px;letter-spacing:.2em;color:var(--dim);margin-bottom:12px;text-transform:lowercase;}
-  .feed-scroll{display:flex;gap:12px;overflow-x:auto;scrollbar-width:none;padding-bottom:8px;}
-  .feed-scroll::-webkit-scrollbar{display:none;}
-  .fcard{flex-shrink:0;width:240px;border:1px solid var(--line);background:rgba(var(--edge),.03);border-radius:14px;padding:14px;backdrop-filter:blur(6px);}
+  .feed-scroll{display:flex;gap:12px;overflow:hidden;padding-bottom:8px;mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent);-webkit-mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent);}
+  .feed-track{display:flex;gap:12px;animation:feedScroll 60s linear infinite;}
+  .feed-track:hover{animation-play-state:paused;}
+  @keyframes feedScroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .fcard{flex-shrink:0;width:260px;border:1px solid var(--line);background:rgba(var(--edge),.03);border-radius:14px;padding:14px;backdrop-filter:blur(6px);}
   .fcard .fhead{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
   .fcard .favatar{width:32px;height:32px;border-radius:50%;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:600;color:#fff;}
   .fcard .fmeta{min-width:0;}
@@ -528,10 +530,11 @@ function homeHTML(){
     s+='<button class="app-icon" data-i="'+i+'"><span class="ring">'+media+'</span><span>'+c.label+'</span></button>';
   });
   s+='</div><a class="discord-cta" href="https://discord.com" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M20.317 4.369A19.79 19.79 0 0 0 16.558 3c-.21.375-.444.882-.608 1.28a18.27 18.27 0 0 0-3.9 0A12.6 12.6 0 0 0 11.44 3a19.74 19.74 0 0 0-3.76 1.37C3.66 8.14 2.93 11.8 2.9 15.4a19.9 19.9 0 0 0 6.07 3.06c.49-.67.93-1.39 1.3-2.14-.71-.27-1.39-.6-2.03-.99.17-.12.34-.25.5-.39 3.93 1.82 8.19 1.82 12.06 0 .17.14.33.27.5.39-.65.39-1.33.72-2.04.99.37.75.81 1.47 1.3 2.14a19.84 19.84 0 0 0 6.07-3.06c.04-4.17-1.07-7.8-4.27-11.03ZM9.68 13.33c-1.18 0-2.15-1.08-2.15-2.4s.95-2.4 2.15-2.4 2.17 1.09 2.15 2.4c0 1.32-.96 2.4-2.15 2.4Zm4.64 0c-1.18 0-2.15-1.08-2.15-2.4s.95-2.4 2.15-2.4 2.17 1.09 2.15 2.4c0 1.32-.95 2.4-2.15 2.4Z"/></svg>join our discord for more links</a>';
-  var FEED=[{u:"evicty",r:"owner of vortex chat",t:"velocity is one of if not the most modern proxy site ive used. the themes alone are worth it.",c:"#3b82f6"},{u:"technonyte",r:"dev",t:"bro the game library goes crazy. 1200+ games and it loads instantly on my chromebook.",c:"#22c55e"},{u:"zxs",r:"mod",t:"the panic key saved me in class like 5 times this week lmao",c:"#f472b6"},{u:"humbled",r:"github.com/othehumbled",t:"i wrote this at 3am and somehow it works. star the repo or the penguin gets it.",c:"#f59e0b"},{u:"penguin",r:"mascot",t:"squawk. star the repo. squawk.",c:"#06b6d4"},{u:"xeno",r:"user",t:"the cherri theme is so clean. i never wanna go back to light mode (rip light mode you wont be missed)",c:"#8b5cf6"},{u:"k1tt3n",r:"user",t:"movies tab is a w. now i can watch stuff and play stuff in the same place",c:"#ef4444"},{u:"void",r:"tester",t:"backend was on fire for like 2 hours but humbled fixed it. wyd bro",c:"#2dd4bf"}];
-  s+='<div class="feed-wrap"><div class="feed-title">what people say</div><div class="feed-scroll">';
+  var FEED=[{u:"shadowgamer",r:"user",t:"velocity is one of if not the most modern proxy site ive used. the themes alone are worth it.",c:"#3b82f6"},{u:"neonfox",r:"user",t:"bro the game library goes crazy. 1000+ games and it loads instantly on my chromebook.",c:"#22c55e"},{u:"pixelpal",r:"user",t:"the panic key saved me in class like 5 times this week lmao",c:"#f472b6"},{u:"codeninja",r:"user",t:"this is literally the best unblocker ive ever used. so fast and clean.",c:"#f59e0b"},{u:"lunaray",r:"user",t:"the cherri theme is so clean. i never wanna go back to light mode (rip light mode you wont be missed)",c:"#06b6d4"},{u:"k1tt3n",r:"user",t:"movies tab is a w. now i can watch stuff and play stuff in the same place",c:"#8b5cf6"},{u:"driftkid",r:"user",t:"slope and 1v1.lol work perfectly. this site is goated fr",c:"#ef4444"},{u:"voidwalker",r:"user",t:"the custom themes are insane. i switch between ocean and midnight daily",c:"#2dd4bf"},{u:"stardust",r:"user",t:"finally a proxy that doesnt look like it was made in 2005",c:"#a855f7"},{u:"byteboy",r:"user",t:"geometry dash lite remake is actually fire. cant believe this runs in browser",c:"#f97316"},{u:"misty",r:"user",t:"my school blocked everything but velocity still works. absolute lifesaver",c:"#ec4899"},{u:"zerocool",r:"user",t:"the game library has like every game i could ever want. insane collection",c:"#14b8a6"}];
+  s+='<div class="feed-wrap"><div class="feed-title">what people say</div><div class="feed-scroll"><div class="feed-track">';
   FEED.forEach(function(f){s+='<div class="fcard"><div class="fhead"><div class="favatar" style="background:'+f.c+'">'+f.u[0].toUpperCase()+'</div><div class="fmeta"><div class="fuser">'+f.u+'</div><div class="frole">'+f.r+'</div></div></div><div class="ftext">'+f.t+'</div></div>';});
-  s+='</div></div><div class="footer-ver">v3.5.0</div></div>';return s;
+  FEED.forEach(function(f){s+='<div class="fcard"><div class="fhead"><div class="favatar" style="background:'+f.c+'">'+f.u[0].toUpperCase()+'</div><div class="fmeta"><div class="fuser">'+f.u+'</div><div class="frole">'+f.r+'</div></div></div><div class="ftext">'+f.t+'</div></div>';});
+  s+='</div></div></div><div class="footer-ver">v3.5.0</div></div>';return s;
 }
 function wireHome(){
   var form=document.getElementById("homeSearch");
@@ -733,7 +736,6 @@ var GAMES_RAW=`0.html|Bowmasters
 209-f.html|Draw the Hill
 210-f.html|Dragon vs Bricks
 211-f.html|Death Run 3D
-212-f2.html|Cut the Rope
 213-f2.html|Cut the Rope: Time Travel
 214-fi2.html|Cut the Rope: Holiday Gift
 215-f.html|Bendy and the Ink Machine
@@ -883,8 +885,6 @@ var GAMES_RAW=`0.html|Bowmasters
 362.html|Idle Breakout
 363.html|Idle Lumber Inc
 1-a.html|Untitled #1
-1-fd.html|OvO (2)
-1.html|OvO (3)
 2.html|Untitled #2
 3.html|Untitled #3
 4.html|Untitled #4
@@ -900,7 +900,6 @@ var GAMES_RAW=`0.html|Bowmasters
 20.html|Untitled #20
 27.html|Geometry Dash
 33.html|Untitled #33
-34.html|Retro Bowl College (2)
 35.html|Drive Mad
 36.html|Untitled #36
 37.html|Untitled #37
@@ -924,32 +923,19 @@ var GAMES_RAW=`0.html|Bowmasters
 55.html|Untitled #55
 56.html|Untitled #56
 57.html|Monkey Mart
-64-fix.html|64 fix
-64.html|Backrooms (2)
-65.html|Baldi's Basics (2)
 67.html|Untitled #67
-75-fix.html|75 fix
 75.html|Untitled #75
-76-fix.html|76 fix
-76.html|Bob The Robber 2 (2)
-82-aa.html|Cookie Clicker (2)
 82-u.html|Untitled #82
-82.html|Untitled #82 (2)
 83.html|Untitled #83
 85-f.html|Untitled #85
-85.html|Cut the Rope (3)
 87.html|Untitled #87
 90-f.html|Untitled #90
 90.html|Granny Original
 100.html|Untitled #100
 110.html|Untitled #110
-112-fix.html|112 fix
-112.html|Wordle (2)
 114.html|Untitled #114
-117-fix.html|117 fix
 117.html|Untitled #117
 120.html|Untitled #120
-123-win.html|123 win
 123.html|Untitled #123
 126.html|Granny 3
 130.html|Untitled #130
@@ -972,8 +958,6 @@ var GAMES_RAW=`0.html|Bowmasters
 166.html|Untitled #166
 172.html|Untitled #172
 179-a.html|Untitled #179
-179-a2.html|Soundboard (3)
-179.html|Soundboard (2)
 181.html|Untitled #181
 182.html|Untitled #182
 184.html|UNDERTALE
@@ -986,12 +970,10 @@ var GAMES_RAW=`0.html|Bowmasters
 193.html|Untitled #193
 194.html|Untitled #194
 195.html|Untitled #195
-196-fixed.html|196 fixed
 196.html|Untitled #196
 203.html|Untitled #203
 204.html|Untitled #204
 205-f.html|Untitled #205
-205.html|Untitled #205 (2)
 206.html|Untitled #206
 207.html|Untitled #207
 208.html|Untitled #208
@@ -999,29 +981,21 @@ var GAMES_RAW=`0.html|Bowmasters
 210.html|Untitled #210
 211.html|Untitled #211
 212-f.html|Untitled #212
-212.html|Cut the Rope (2)
 213-f.html|Untitled #213
-213.html|Cut the Rope: Time Travel (2)
-214-fi.html|214 fi
-214.html|Cut the Rope: Holiday Gift (2)
 215.html|Untitled #215
 216.html|Untitled #216
-217-c.html|Untitled #217 (2)
 217.html|Untitled #217
 253.html|Untitled #253
 254.html|Untitled #254
 257.html|Untitled #257
 259.html|Untitled #259
 263.html|Untitled #263
-265-fix.html|265 fix
 265.html|Escape-Road-2
-266.html|Speed Stars (2)
 267.html|Untitled #267
 268.html|Untitled #268
 269.html|Untitled #269
 270.html|Untitled #270
 271.html|Untitled #271
-272-f.html|Basketball Stars (2)
 272.html|Untitled #272
 274.html|Untitled #274
 276.html|Untitled #276
@@ -1047,7 +1021,6 @@ var GAMES_RAW=`0.html|Bowmasters
 372.html|Stickman Boost
 373.html|Stickman Climb
 374.html|Untitled #374
-374e.html|Untitled #374 (2)
 374e2.html|Super Stickman Golf
 375-f.html|Game
 375.html|Untitled #375
@@ -1060,13 +1033,10 @@ var GAMES_RAW=`0.html|Bowmasters
 381.html|Untitled #381
 382.html|Runner Template
 383.html|Untitled #383
-384.html|Runner Template (2)
 385-f.html|Untitled #385
-385.html|Untitled #385 (2)
 386.html|Untitled #386
 387-f.html|DrawJoust
 387.html|Untitled #387
-388-f.html|Untitled #388 (2)
 388.html|Untitled #388
 389-f.html|ElementalMasters
 389.html|Untitled #389
@@ -1079,12 +1049,10 @@ var GAMES_RAW=`0.html|Bowmasters
 395-f.html|GunBuild
 395.html|Untitled #395
 396-f.html|Untitled #396
-396.html|Untitled #396 (2)
 397.html|Untitled #397
 398.html|Untitled #398
 399.html|Untitled #399
 400-f.html|Untitled #400
-400.html|Untitled #400 (2)
 401.html|Untitled #401
 402-f.html|Funny Puzzles
 402.html|Untitled #402
@@ -1094,7 +1062,6 @@ var GAMES_RAW=`0.html|Bowmasters
 406-f.html|Supermarket 3D
 406.html|Untitled #406
 407-f.html|Untitled #407
-407.html|Untitled #407 (2)
 408-f.html|Telekinesis Master
 408.html|Untitled #408
 409.html|Telekinesis Quest
@@ -1102,10 +1069,8 @@ var GAMES_RAW=`0.html|Bowmasters
 411.html|Force Race
 412.html|Untitled #412
 413.html|Tug of War
-414.html|Runner Template (3)
 415.html|Untitled #415
 416-f.html|Untitled #416
-416.html|Untitled #416 (2)
 417.html|Untitled #417
 418.html|Untitled #418
 419-f.html|Weapon Upgrade Rush
@@ -1126,7 +1091,6 @@ var GAMES_RAW=`0.html|Bowmasters
 428-f.html|Five Nights at Freddy's 4 Halloween
 428.html|Untitled #428
 429-f.html|Untitled #429
-429-ff.html|Gn code editor (2)
 429.html|Gn code editor
 430.html|10 Minutes Till Dawn
 431.html|Untitled #431
@@ -1135,13 +1099,10 @@ var GAMES_RAW=`0.html|Bowmasters
 433.html|Untitled #433
 434.html|God's Flesh
 435.html|Untitled #435
-436.html|Abandoned (3)
 437.html|Bouncemasters
-438.html|Abandoned (2)
 439.html|Untitled #439
 440.html|PICO-8 Cartridge
 441.html|KittyToy
-442.html|PICO-8 Cartridge (2)
 443-f.html|Adventure Drivers
 443.html|Untitled #443
 444.html|Ages of Conflict
@@ -1151,7 +1112,6 @@ var GAMES_RAW=`0.html|Bowmasters
 446.html|Untitled #446
 447-e.html|Nijika&#39;s Ahoge
 447.html|Untitled #447
-448.html|YT Game Wrapper WebGL Template (2)
 449.html|YT Game Wrapper WebGL Template
 450-f.html|Amanda The Adventurer
 450.html|Untitled #450
@@ -1180,41 +1140,31 @@ var GAMES_RAW=`0.html|Bowmasters
 463.html|Untitled #463
 464.html|ChoppyOrc
 465-fix.html|Cuphead
-465.html|Cuphead (2)
 466-f.html|Baldi's Basics Classic Remastered
 466.html|Untitled #466
-467-updatee.html|467 updatee
 467-updateef.html|Baldi's Basics Plus
 467.html|Untitled #467
 468-f.html|Hollow Knight
 468.html|Untitled #468
 469.html|Sandstone
 470.html|HTML5 Doodle Jump
-471.html|Abandoned (4)
 472.html|Bad Time Simulator (Sans Fight)
 473.html|SPACEBAR CLICKER
 474.html|Friday Night Funkin'
-475.html|Friday Night Funkin' (3)
-476.html|Friday Night Funkin' (4)
 477.html|Friday Night Funkin' + Hatsune Miku
-478.html|Friday Night Funkin' (2)
 479.html|Untitled #479
 480.html|Friday Night Funkin’ Sarvente's Mid-Fight Masses
 481.html|Friday Night Funkin' (FNF) vs Tricky: Version 2, Phase 3 (w/ CHEAT BOT)
 482-2.html|Untitled #482
 482-2f.html|HUMAN EXPENDITURE PROGRAM
-482.html|Untitled #482 (2)
 483.html|Hit Single Real
 484.html|Friday Night Funkin': Psych Engine
-485.html|Friday Night Funkin': Psych Engine (2)
 486.html|Sonic Legacy
 487.html|Vs. QT Mod
-488.html|Friday Night Funkin': Psych Engine (3)
 489.html|Indie Cross
 490.html|Rooftop Snipers 2
 491.html|I woke up next to you again
 492.html|Asgore Saves His Family
-493.html|New project (2)
 494.html|New project
 495.html|Gg kart
 496.html|Endless Aethos
@@ -1224,17 +1174,13 @@ var GAMES_RAW=`0.html|Bowmasters
 500.html|Twiddlefinger
 501.html|Kindergarten3Port
 502-fixed.html|Stick With It
-502.html|Stick With It (2)
 503.html|Five Nights at Candy's 1
 504.html|Five Nights at Candy's 2
 505.html|Untitled #505
-506-f.html|Untitled #506 (2)
 506.html|Untitled #506
 507-f.html|Untitled #507
-507.html|Untitled #507 (2)
 508.html|Untitled #508
 509.html|FNF SOFT Online (Friday Night Funkin')
-510-f.html|Untitled #510 (2)
 510.html|Untitled #510
 511.html|Dogeminer
 512.html|The Final Earth 2
@@ -1243,7 +1189,6 @@ var GAMES_RAW=`0.html|Bowmasters
 514-f.html|PortaBoy
 514.html|Untitled #514
 515-f.html|Untitled #515
-515.html|Untitled #515 (2)
 516-f.html|OshiOshiPunch
 516.html|Untitled #516
 517-f.html|GXC Game
@@ -1252,9 +1197,7 @@ var GAMES_RAW=`0.html|Bowmasters
 518.html|Untitled #518
 519-f.html|Created with GameMaker Studio 2
 519.html|Untitled #519
-520-fix.html|520 fix
 520-fix2.html|DanTheMan-Defold 1.1.10
-520.html|DanTheMan-Defold 1.1.10 (2)
 521-f.html|LD47
 521.html|Untitled #521
 522-f.html|Created with GameMaker: Studio
@@ -1265,12 +1208,8 @@ var GAMES_RAW=`0.html|Bowmasters
 525.html|Pibby slop
 526.html|Flambe Game (JSEmbed)
 527.html|Games
-528.html|Nickelodeon (2)
 529.html|Nickelodeon
 530.html|Tasty Pastry Party
-531.html|Games (2)
-532.html|Nickelodeon (3)
-533.html|Nickelodeon (4)
 534.html|TTG
 535.html|TTG - Jump Jousts 2
 536.html|Cat Connection - V2
@@ -1281,8 +1220,6 @@ var GAMES_RAW=`0.html|Bowmasters
 541.html|Pibby Apocalypse
 542-a.html|Untitled #542
 542-af.html|Karlson
-542.html|Untitled #542 (2)
-543-a.html|Untitled #543 (2)
 543-af.html|Jelly Drift
 543.html|Untitled #543
 544.html|Free Plinko Game Online - Play &amp; Win Instant Rewards
@@ -1305,102 +1242,64 @@ var GAMES_RAW=`0.html|Bowmasters
 559.html|FNF VS Shaggy
 560-f.html|Unity Web Player - DELTATRAVELER
 560.html|Untitled #560
-561-f.html|Untitled #561 (2)
 561.html|Untitled #561
 562-f.html|Untitled #562
-562.html|Untitled #562 (2)
-563-f.html|Untitled #563 (2)
 563.html|Untitled #563
-564-f.html|Untitled #564 (2)
 564.html|Untitled #564
 565-f.html|Untitled #565
-565.html|Untitled #565 (2)
 567-f.html|Untitled #567
-567.html|Untitled #567 (2)
-568-f.html|Untitled #568 (2)
 568.html|Untitled #568
-569-f.html|Untitled #569 (2)
 569.html|Untitled #569
 570-f.html|Untitled #570
-570.html|Untitled #570 (2)
 571-f.html|Untitled #571
-571.html|Untitled #571 (2)
 572-f.html|Untitled #572
-572.html|Untitled #572 (2)
 573-f.html|Untitled #573
-573.html|Untitled #573 (2)
 574-f.html|Untitled #574
-574.html|Untitled #574 (2)
-575-f.html|Untitled #575 (2)
 575.html|Untitled #575
 576-f.html|Untitled #576
-576.html|Untitled #576 (2)
 577-f.html|Untitled #577
-577.html|Untitled #577 (2)
 578-f.html|Untitled #578
-578.html|Untitled #578 (2)
-579-f.html|Untitled #579 (2)
 579.html|Untitled #579
 580-f.html|Untitled #580
-580.html|Untitled #580 (2)
 581-f.html|Untitled #581
-581.html|Untitled #581 (2)
 582.html|Untitled #582
 583.html|Friday Night Funkin' Lullaby
 584.html|Untitled #584
 585.html|Fallout
 586.html|Untitled #586
-587-f.html|Untitled #587 (2)
 587.html|Untitled #587
 588.html|Super Mario 64 on the Web!
 589-f.html|Sonic CD
-589.html|Sonic CD (2)
-590-f.html|Sonic Mania (2)
 590.html|Sonic Mania
 591-a.html|Slime Rancher Decompiled v0.2.1
-591-awe.html|Slime Rancher Decompiled v0.2.1 (2)
 591.html|Untitled #591
-592-f.html|Untitled #592 (2)
 592.html|Untitled #592
 593-f.html|Untitled #593
-593-ff.html|593 ff
-593.html|Untitled #593 (2)
+593-ff.html|Pac-Man World 2
 594-f.html|Untitled #594
-594.html|Untitled #594 (2)
 595-f.html|Shapez Demo - Factory Automation Game
 595.html|Untitled #595
-596-fixx.html|596 fixx
 596-u.html|Untitled #596
-596.html|Untitled #596 (2)
 597-a.html|PvZ2 Gardendless Online - 0.6.0
 597.html|Untitled #597
 598.html|Untitled #598
 599-f.html|Untitled #599
-599.html|Untitled #599 (2)
 600.html|Untitled #600
 601.html|Untitled #601
 602.html|Untitled #602
-603-aa.html|603 aa
 603-aa2.html|Grow a Garden in Growden.io - Free Garden Game
 603.html|Untitled #603
 604-a.html|MinesweeperPlus
 604.html|Untitled #604
 605-e.html|Untitled #605
 605-ef.html|SchoolBoy Runaway
-605.html|Untitled #605 (2)
 606-e.html|Untitled #606
-606-ef.html|GXC Game (2)
-606.html|Untitled #606 (2)
-607-e.html|Untitled #607 (2)
 607-ef.html|Tattletail
 607.html|Untitled #607
 608.html|Untitled #608
 609-a.html|Untitled #609
-609.html|Untitled #609 (2)
 610.html|Untitled #610
-611-f.html|Untitled #611 (2)
 611.html|Untitled #611
-612--f.html|Untitled #612 (2)
 612.html|Untitled #612
 613.html|Untitled #613
 614.html|Untitled #614
@@ -1411,7 +1310,6 @@ var GAMES_RAW=`0.html|Bowmasters
 618.html|Bob's Onslaught
 619.html|Untitled #619
 620.html|Three Goblets
-621.html|Friday Night Funkin': Psych Engine (4)
 622.html|Oneshot Legacy
 623-work.html|CelesteWasm
 623.html|Untitled #623
@@ -1424,8 +1322,6 @@ var GAMES_RAW=`0.html|Bowmasters
 628-f.html|Pizza Tower: Scoutdigo Mod
 628.html|Untitled #628
 629.html|EasyRPG Player
-630.html|EasyRPG Player (2)
-631-a.html|EasyRPG Player (3)
 631.html|Untitled #631
 632-a.html|Cave Story Web
 632.html|Untitled #632
@@ -1434,55 +1330,37 @@ var GAMES_RAW=`0.html|Bowmasters
 635.html|SpelunkyClassicHD
 636.html|Untitled #636
 637-f.html|Untitled #637
-637-ff.html|637 ff
-637.html|Untitled #637 (2)
 638-f.html|Untitled #638
-638-ff.html|638 ff
-638.html|Untitled #638 (2)
 639.html|Untitled #639
-640.html|Really cool flash game (2)
 641.html|Really cool flash game
 642.html|Untitled #642
 643.html|Rio Rex on Silvergames.com
 644.html|Friday Night Funkin' Vs Nonsense
 645-e.html|Arthur's Nightmare
 645.html|Untitled #645
-646-fixed.html|GXC Game (3)
 646.html|Untitled #646
-647-f.html|Untitled #647 (2)
 647.html|Untitled #647
-648-el.html|GXC Game (4)
 648.html|Untitled #648
 649.html|Look Outside
 650-f.html|PMKM
 650.html|Untitled #650
-651.html|PMKM (2)
 652.html|Grand Theft Auto: Vice City
 653-f.html|1 DATE DANGER
 653.html|Untitled #653
-654-f.html|Untitled #654 (2)
 654.html|Untitled #654
 655.html|Unity Web Player - Goblin Goopmaxxing
 656.html|Rogue Sergeant The Final Operation
 657.html|Untitled #657
 658.html|Midnight Shift 1.2
-659.html|Really cool flash game (3)
-660.html|Created with GameMaker: Studio (2)
 661.html|Royal Towers YouTube Playable
-662.html|YT Game Wrapper WebGL Template (3)
-663.html|YT Game Wrapper WebGL Template (4)
 664.html|Tall.io
-665.html|YT Game Wrapper WebGL Template (5)
-666.html|YT Game Wrapper WebGL Template (6)
 667-fix.html|IN STARS AND TIME v1.0.6.3
-667-fixes2.html|IN STARS AND TIME v1.0.6.3 (2)
 667.html|Untitled #667
 668-fix2.html|Gorilla tag web
 668.html|Untitled #668
 669.html|Terrarium
 670.html|BALDI
 671-f.html|Untitled #671
-671.html|Untitled #671 (2)
 672-2.html|A Difficult Game About Climbing
 672.html|Untitled #672
 673.html|Untitled #673
@@ -1493,62 +1371,46 @@ var GAMES_RAW=`0.html|Bowmasters
 678.html|Untitled #678
 679.html|Untitled #679
 680-f.html|Untitled #680
-680.html|Untitled #680 (2)
 681.html|Untitled #681
 682.html|Untitled #682
-683-f.html|Untitled #683 (2)
 683.html|Untitled #683
 684.html|Untitled #684
 685-f.html|Untitled #685
-685.html|Untitled #685 (2)
-686-f.html|Untitled #686 (2)
 686.html|Untitled #686
-687.html|Really cool flash game (4)
 688.html|Untitled #688
-689.html|Really cool flash game (5)
 690.html|Friday Night Funkin': AKAGE
 691.html|Heartbreak Havoc
-692.html|GXC Game (5)
 693.html|Pixelsuft hl
 694.html|Untitled #694
 695.html|Adventure
-696-f.html|Untitled #696 (2)
 696.html|Untitled #696
-697-f.html|Untitled #697 (2)
 697.html|Untitled #697
-698-f.html|Untitled #698 (2)
 698.html|Untitled #698
 699.html|Stickman Destruction - OnlineGames.io
 700.html|Untitled #700
 701.html|George and the Printer
 702.html|JavascriptPS1
-703.html|Friday Night Funkin': Psych Engine (5)
 704-fix.html|Clickteam Fusion Developer 2.5+ HTML5 Runtime
 704.html|Untitled #704
 705-fix.html|IRON LUNG
 705.html|Untitled #705
 706-fix.html|Fear Hunger
 706.html|Untitled #706
-707-fix.html|707 fix
 707-fixf.html|Traffic racer
 707.html|Untitled #707
 708-fix.html|Windose
 708.html|Untitled #708
-709-fixagain.html|709 fixagain
 709-fixagain2.html|Survivor.io
 709.html|Untitled #709
 710-fix.html|Unity Web Player - Five Night's at BIG E
 710.html|Untitled #710
 711.html|Anton Blast Demo v1.2
-712-f.html|Jumbo mario (2)
 712.html|Jumbo mario
 713.html|Untitled #713
 714.html|Untitled #714
-715.html|Friday Night Funkin' (5)
 716-fix2.html|Unity Web Player - CloverPit
 716.html|Untitled #716
 717-fix2.html|Peaks of Yore
-717.html|Peaks of Yore (2)
 718.html|Unity Web Player - Untitled Goose Game
 719-f.html|A Game About Feeding A Black Hole
 719.html|Untitled #719
@@ -1557,10 +1419,8 @@ var GAMES_RAW=`0.html|Bowmasters
 722.html|Fused 240
 723.html|Brotato
 724.html|Endoparasitic2
-725-ff.html|725 ff
 725-fff.html|Unity Web Player - ShredSauce
 726-f.html|Untitled #726
-726.html|Untitled #726 (2)
 727.html|Unity Web Player - Dimension incident
 728.html|Fear Assessment
 729.html|Untitled #729
@@ -1577,18 +1437,15 @@ var GAMES_RAW=`0.html|Bowmasters
 739.html|Soccer Random 1
 740-f.html|BART BLAST (INDEV VERSION)
 740.html|Untitled #740
-741-f.html|Untitled #741 (2)
 741.html|Untitled #741
 742.html|Untitled #742
 743.html|Power Hover
 744-a.html|Tung Sahur Horror
-744.html|Escape Road (2)
 745.html|Untitled #745
 746.html|Fundamental Paper Novel
 747.html|Worst Time Simulator
 748.html|LastBreath
 749.html|SMB1 Web Gameplay
-750-u.html|Unity Web Player - Five Nights at Last Breath (2)
 750.html|Unity Web Player - Five Nights at Last Breath
 751.html|Unity WebGL Player
 752.html|Bad Piggies
@@ -1596,13 +1453,11 @@ var GAMES_RAW=`0.html|Bowmasters
 754-f.html|Minecraft
 754.html|Untitled #754
 755-f.html|Untitled #755
-755.html|Untitled #755 (2)
 756-f.html|Untitled #756
 756-ff.html|Witch's Heart
 757-f.html|Ultrapool
 757.html|Untitled #757
 758.html|CaseOhs Basics in Eating and Fast Food
-758a.html|CaseOhs Basics in Eating and Fast Food (2)
 759.html|Dice a Million
 760.html|Overburden
 761.html|Unity Web Player - FISH
@@ -1615,7 +1470,6 @@ var GAMES_RAW=`0.html|Bowmasters
 768.html|Untitled #768
 769.html|Stickman Duel
 770-update.html|Sonic Robo Blast 2
-770.html|Sonic Robo Blast 2 (2)
 771-z.html|Unity Web Player - Hollow Knight SilkSong
 772.html|Samnmax
 773.html|Untitled #773
@@ -1625,22 +1479,15 @@ var GAMES_RAW=`0.html|Bowmasters
 777.html|Outhold
 778.html|< game >
 779.html|Ihnmaims
-780.html|Really cool flash game (6)
 781.html|Scratch Inc.
-782.html|Untitled #782 (2)
 782f.html|Untitled #782
-782ff.html|782ff
 783.html|Apes vs Helium
 784.html|Gabriel's Awesome Schoolhouse
-785-upd.html|785 upd
 785-upd2.html|Web Dashers
-785-upd3.html|Web Dashers (2)
 785.html|Untitled #785
 786.html|Volley Random
 787.html|Beatblock
-788-f.html|Untitled #788 (2)
 788.html|Untitled #788
-789-fix.html|Stardew Valley (2)
 789.html|Stardew Valley
 790.html|Helltaker
 791-f.html|WhosYourDaddy
@@ -1649,18 +1496,11 @@ var GAMES_RAW=`0.html|Bowmasters
 792.html|Untitled #792
 793.html|LETHAL APE
 794-fixed.html|Fear &amp; Hunger 2: TERMINA
-794.html|Fear &amp; Hunger 2: TERMINA (2)
 795.html|UvuvwevwevweOnyetenvewv
 796.html|SLENDYTUBBIES 1
 797.html|Fih
-798.html|Game (2)
-799-fix.html|Unity Web Player - Hungry Lamu 2 (2)
 799.html|Unity Web Player - Hungry Lamu 2
 800-fix.html|Unity Web Player - Rocket Goal
-800.html|Unity Web Player - Rocket Goal (3)
-801-fix.html|Unity Web Player - Rocket Goal (4)
-801.html|Unity Web Player - Rocket Goal (2)
-802.html|GXC Game (6)
 803-fix.html|Unity Web Player - Bendy and the Ink Machine
 803.html|Crackers
 804.html|Vampire Survivors
@@ -1669,65 +1509,37 @@ var GAMES_RAW=`0.html|Bowmasters
 807.html|Slendytubbies 2D
 808.html|Unity Web Player - Spaceflight Simulator
 809-f.html|Untitled #809
-809.html|Untitled #809 (2)
-810-fix.html|810 fix
-810-fix2.html|810 fix2
 810.html|Untitled #810
-811-f.html|Untitled #811 (2)
 811.html|Untitled #811
 812-f.html|Untitled #812
-812.html|Untitled #812 (2)
 813-f.html|Frickbears 3
-813-f2.html|Frickbears 3 (2)
-813-f3.html|Frickbears 3 (3)
 814.html|Unity Web Player - MiSide
 815.html|Baldi's Basics The Ultra Decompile
 816.html|Unity Web Player - -3
 817-f.html|Untitled #817
-817.html|Untitled #817 (2)
 818.html|Untitled #818
-819-fix.html|Unity Web Player - 20 Minutes Till Dawn (2)
 819-fix2.html|Unity Web Player - 20 Minutes Till Dawn
-819.html|Unity Web Player - 20 Minutes Till Dawn (3)
-820-fix.html|820 fix
-820-fix2.html|820 fix2
 820.html|Untitled #820
-821-fix.html|821 fix
-821-fix2.html|821 fix2
 821.html|Untitled #821
 822-f.html|Untitled #822
-822.html|Untitled #822 (2)
-823-fix.html|823 fix
-823-fix2.html|823 fix2
 823.html|Untitled #823
-824-f.html|Untitled #824 (2)
 824.html|Untitled #824
 825.html|Cruelty Squad
 826-f.html|JSB
-826.html|JSB (2)
 827-f.html|TABS
 828.html|Slider
 829.html|Emscripten-Generated Code
-830.html|Emscripten-Generated Code (2)
-831.html|Emscripten-Generated Code (3)
-832.html|Emscripten-Generated Code (5)
-833.html|Emscripten-Generated Code (4)
 834.html|I WANNA BE THE GUY: THE GAME: THE MOVIE
 835.html|Yohoho.io
 836.html|Untitled #836
-837-f.html|Really cool flash game (7)
 837.html|Untitled #837
 838.html|Vena
 839.html|Split
-840-fix2.html|Unity Web Player - Talking Hippo (2)
 840.html|Unity Web Player - Talking Hippo
 841-f.html|Untitled #841
-841.html|Untitled #841 (2)
 842.html|Untitled #842
 843.html|La Madriguera
-844-f.html|Untitled #844 (2)
 844.html|Untitled #844
-845-f.html|Really cool flash game (8)
 845.html|Untitled #845
 846.html|OneShot: World Machine Edition
 847.html|PEAK
@@ -1735,18 +1547,15 @@ var GAMES_RAW=`0.html|Bowmasters
 849.html|Azahar Web
 850.html|Lobotomy Corporation
 851.html|GTA III
-852.html|Granny 3 (2)
 853.html|SCP – Containment Breach
 854.html|Ravenfield
 855.html|Trombone Champ
 856.html|Pikuniku
 857.html|Inscryption Webport
 858.html|60 Seconds - Web
-859-f.html|Untitled #859 (2)
 859.html|Untitled #859
 860.html|Adventure Game Studio
 861.html|Friday Night Funkin': VS. Mario Ultra Rebooted
-862.html|Friday Night Funkin': Psych Engine (6)
 863.html|Untitled #863
 864.html|Untitled #864`;
 var GAMES=GAMES_RAW.split("\n").map(function(l){var i=l.indexOf("|");if(i<0)return null;var f=l.slice(0,i),n=l.slice(i+1);return{id:parseInt(f,10),name:n,cover:COVERS+"/"+parseInt(f,10)+".png",url:PLAY+"/"+f};}).filter(function(g){return g&&g.name;});
@@ -1883,7 +1692,6 @@ function initBg(){
     if(showStars){
     for(var i=0;i<stars.length;i++){var s=stars[i];s.phase+=0.02*s.speed*dt;s.x+=s.vx*dt;s.y+=s.vy*dt;if(s.x<0)s.x+=w;else if(s.x>w)s.x-=w;if(s.y<0)s.y=h;else if(s.y>h)s.y-=h;var op=Math.max(0,Math.min(1,s.base+Math.sin(s.phase)*0.35));ctx.fillStyle=colW(op);ctx.beginPath();ctx.arc(s.x,s.y,s.r,0,Math.PI*2);ctx.fill();if(s.r>1.6){var sp=op*0.5,L=s.r*3.2;ctx.strokeStyle=colA2(sp);ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(s.x-L,s.y);ctx.lineTo(s.x+L,s.y);ctx.moveTo(s.x,s.y-L);ctx.lineTo(s.x,s.y+L);ctx.stroke();}}
     var md=80,md2=md*md;for(var a=0;a<stars.length;a++){var sa=stars[a];for(var b2=a+1;b2<stars.length;b2++){var sb=stars[b2];var dx=sa.x-sb.x,dy=sa.y-sb.y,d2=dx*dx+dy*dy;if(d2<md2){var al=(1-Math.sqrt(d2)/md)*0.12;ctx.strokeStyle=colA(al);ctx.lineWidth=0.5;ctx.beginPath();ctx.moveTo(sa.x,sa.y);ctx.lineTo(sb.x,sb.y);ctx.stroke();}}}
-    }
     }
     if(showMeteors){
       mt-=dt*16.67;if(mt<=0){spawn();mt=rand(1600,3400);}

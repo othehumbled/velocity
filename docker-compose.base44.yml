@@ -1,0 +1,12 @@
+services:
+  web:
+    image: node:20
+    working_dir: /app/server
+    command: sh -c "npm install --no-audit --no-fund && node server.js"
+    environment:
+      - PORT=8080
+    volumes:
+      - ./:/app
+    ports:
+      - "3000:8080"
+    restart: unless-stopped
