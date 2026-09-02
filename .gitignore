@@ -1,1 +1,6 @@
 server/node_modules/
+# Base44-local files (kept on disk for the preview, not part of the repo)
+docker-compose.base44.yml
+.base44/
+AGENTS.md
+nginx.base44.conf
