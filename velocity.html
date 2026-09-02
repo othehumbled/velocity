@@ -7,6 +7,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&family=Spline+Sans:wght@300..700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<script src="/uv.bundle.js"></script>
+<script src="/uv.config.js"></script>
+<script src="/baremux/index.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root{
@@ -222,6 +225,23 @@ window.dispatchEvent(new Event("sandstone-loaded"));
 
 <script>
 
+var uvConnection=(window.BareMux?new BareMux.BareMuxConnection("/baremux/worker.js"):null);
+var uvReadyPromise=null;
+function uvReady(){
+  if(uvReadyPromise)return uvReadyPromise;
+  uvReadyPromise=(async function(){
+    try{
+      await navigator.serviceWorker.register("/proxy-sw.js",{scope:"/"});
+      await navigator.serviceWorker.ready;
+      if(uvConnection&&!await uvConnection.getTransport()){
+        await uvConnection.setTransport("/baremod/index.mjs",[location.origin+"/bare/"]);
+      }
+    }catch(e){console.warn("uv proxy setup failed:",e);}
+  })();
+  return uvReadyPromise;
+}
+uvReady();
+
 var THEMES=[{id:"dark",label:"dark",dot:"linear-gradient(135deg,#05070f,#3b82f6)"},{id:"light",label:"light",dot:"linear-gradient(135deg,#e2e8f0,#3b82f6)"},{id:"red",label:"crimson",dot:"linear-gradient(135deg,#14060a,#ef4444)"},{id:"monochrome",label:"mono",dot:"linear-gradient(135deg,#0a0a0a,#d1d5db)"},{id:"cherri",label:"cherri",dot:"linear-gradient(135deg,#140a12,#f472b6)"}];
 var BACKGROUNDS=[{id:"meteor",label:"meteor shower"},{id:"aurora",label:"aurora waves"},{id:"stars",label:"starfield"},{id:"none",label:"solid"}];
 function getTheme(){return localStorage.getItem("vel_theme")||"cherri";}
@@ -393,7 +413,7 @@ function ensureIframe(t){
   f.onload=function(){t.loading=false;if(activeId===t.id)updateLoader();};
   frameArea.appendChild(f);iframeEls[t.id]=f;return f;
 }
-function setIframeSrc(t){var f=ensureIframe(t);if(t.reload){f.src="about:blank";setTimeout(function(){f.src=t.src;},0);}else{f.src=t.src;}}
+function setIframeSrc(t){var f=ensureIframe(t);var target=(t.kind==="web"&&!t.isGame&&window.__uv$config)?(__uv$config.prefix+__uv$config.encodeUrl(t.src)):t.src;if(t.reload){f.src="about:blank";setTimeout(function(){f.src=target;},0);}else{f.src=target;}}
 function renderFrame(){
   tabs.forEach(function(t){var f=iframeEls[t.id];if(f)f.style.display="none";});
   var at=activeTab();
@@ -424,10 +444,11 @@ function renderFrame(){
   updateLoader();
 }
 function updateLoader(){var at=activeTab();var l=document.getElementById("loader");if(at&&at.kind==="web"&&at.loading){l.hidden=false;l.style.width="0%";requestAnimationFrame(function(){l.style.width="85%";});}else{l.hidden=true;l.style.width="100%";}}
-function navigate(rawUrl,opts){
+async function navigate(rawUrl,opts){
   opts=opts||{};var target=normalize(rawUrl);var isGame=!!opts.isGame;
   tabs=tabs.map(function(t){if(t.id!==activeId)return t;var h=t.history.slice(0,t.idx+1);h.push({url:target,title:opts.title||target});return{id:t.id,kind:"web",isGame:isGame,title:opts.title||target,history:h,idx:h.length-1,src:target,reload:0,loading:true};});
   var at=activeTab();
+  if(!isGame) await uvReady();
   if(isGame||!USE_SANDSTONE){setIframeSrc(at);}else{sandstoneNav(at);}
   renderTabs();renderFrame();updateChrome();syncDock();
 }
