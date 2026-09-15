@@ -29,3 +29,11 @@ docker compose -f docker-compose.base44.yml up -d
 - cloak in `vel_cloak`, panic key in `vel_panic_key` / `vel_panic_url`
 - library button in game chrome converts the current tab (not a new tab)
 - random messages array `RANDOM_MSGS` picks one per home page load
+- uv transport setting in localStorage `vel_transport`: "epoxy" (default) or "libcurl". applied via BareMux setTransport to `/epoxy/index.mjs` or `/libcurl/index.mjs` with `{wisp: <ws(s)://host/wisp/>}`. both connect to the local wisp endpoint.
+- `@mercuryworkshop/libcurl-transport` has no `libcurlPath` export — server.js resolves its dist dir via createRequire and serves it at `/libcurl/`.
+
+## velocity-public.html
+
+- single-file redistributable, generated from `velocity.html` by a transform: drops uv/baremux script tags + service worker registration, removes the server-only transport card, sets `USE_SANDSTONE=true` (sandstone proxy from CDN + public wisp fallbacks, no service worker).
+- works on any static host; regenerate after changing velocity.html (build script lives outside the repo).
+- the main `velocity.html` needs the node server (uv service worker + epoxy/libcurl transports); the public build does not.

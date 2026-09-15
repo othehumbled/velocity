@@ -2,11 +2,12 @@ import wisp from "wisp-server-node";
 import { createBareServer } from "@tomphttp/bare-server-node";
 import { uvPath } from "@titaniumnetwork-dev/ultraviolet";
 import { epoxyPath } from "@mercuryworkshop/epoxy-transport";
+import { createRequire } from "node:module";
 import { bareModulePath } from "@mercuryworkshop/bare-as-module3";
 import { baremuxPath } from "@mercuryworkshop/bare-mux/node";
 import express from "express";
 import { createServer } from "node:http";
-import { join } from "node:path";
+import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const __dirname = join(fileURLToPath(import.meta.url), "..");
@@ -20,6 +21,8 @@ const app = express();
 app.use(express.static(publicPath));
 app.use(express.static(uvPath));
 app.use("/epoxy/", express.static(epoxyPath));
+const libcurlPath = dirname(createRequire(import.meta.url).resolve("@mercuryworkshop/libcurl-transport"));
+app.use("/libcurl/", express.static(libcurlPath));
 app.use("/baremux/", express.static(baremuxPath));
 app.use("/baremod/", express.static(bareModulePath));
 

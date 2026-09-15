@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- velocity public build — single-file redistributable. everything runs from this one file. -->
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
@@ -7,9 +8,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Radio+Canada+Big:ital,wght@0,400..700;1,400..700&family=Spline+Sans:wght@300..700&family=Roboto+Mono:wght@400;500&display=swap" rel="stylesheet" />
-<script src="/uv.bundle.js"></script>
-<script src="/uv.config.js"></script>
-<script src="/baremux/index.js"></script>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   :root{
@@ -270,31 +268,9 @@
 
 <script>
 
-var uvConnection=(window.BareMux?new BareMux.BareMuxConnection("/baremux/worker.js"):null);
-var uvReadyPromise=null;
-var TRANSPORTS=["epoxy","libcurl"];
-function getTransport(){var t=localStorage.getItem("vel_transport");return TRANSPORTS.indexOf(t)!==-1?t:"epoxy";}
-function setTransportT(t){if(TRANSPORTS.indexOf(t)===-1)t="epoxy";localStorage.setItem("vel_transport",t);}
-function wispUrl(){return(location.protocol==="https:"?"wss://":"ws://")+location.host+"/wisp/";}
-function applyTransport(){
-  if(!uvConnection)return Promise.resolve();
-  var path=getTransport()==="libcurl"?"/libcurl/index.mjs":"/epoxy/index.mjs";
-  return uvConnection.setTransport(path,[{wisp:wispUrl()}]).catch(function(e){console.warn("transport setup failed:",e);});
-}
-function uvReady(){
-  if(uvReadyPromise)return uvReadyPromise;
-  uvReadyPromise=(async function(){
-    try{
-      await navigator.serviceWorker.register("/proxy-sw.js",{scope:"/"});
-      await navigator.serviceWorker.ready;
-      if(uvConnection&&!await uvConnection.getTransport()){
-        await applyTransport();
-      }
-    }catch(e){console.warn("uv proxy setup failed:",e);}
-  })();
-  return uvReadyPromise;
-}
-uvReady();
+// public build: sandstone proxy (no service worker, no server required)
+var uvReadyPromise=Promise.resolve();
+function uvReady(){return uvReadyPromise;}
 
 var THEMES=[{id:"dark",label:"dark",dot:"linear-gradient(135deg,#05070f,#3b82f6)"},{id:"red",label:"crimson",dot:"linear-gradient(135deg,#14060a,#ef4444)"},{id:"monochrome",label:"mono",dot:"linear-gradient(135deg,#0a0a0a,#d1d5db)"},{id:"cherri",label:"cherri",dot:"linear-gradient(135deg,#140a12,#f472b6)"},{id:"ocean",label:"ocean",dot:"linear-gradient(135deg,#040b12,#06b6d4)"},{id:"forest",label:"forest",dot:"linear-gradient(135deg,#050c08,#22c55e)"},{id:"sunset",label:"sunset",dot:"linear-gradient(135deg,#120805,#f97316)"},{id:"midnight",label:"midnight",dot:"linear-gradient(135deg,#080614,#8b5cf6)"},{id:"gold",label:"gold",dot:"linear-gradient(135deg,#0d0a05,#f59e0b)"},{id:"mint",label:"mint",dot:"linear-gradient(135deg,#04100d,#2dd4bf)"}];
 var BG_LAYERS=["stars","aurora","meteors"];
@@ -371,7 +347,7 @@ function proxify(url,isGame){
 }
 
 var sandstone=null,sandstoneProxy=null,sandstoneFrame=null,sandstoneReady=false,sandstonePending=null;
-var USE_SANDSTONE=false;
+var USE_SANDSTONE=true;
 var WISP_FALLBACKS=["wss://wisp.mercurywork.shop/","wss://wisp.mercurywork.org/","wss://wispmirror.mercurywork.shop/"];
 function sandstoneSetWisp(i){
   if(!sandstone||!sandstone.libcurl||!WISP_FALLBACKS[i])return;
@@ -1599,12 +1575,10 @@ function settingsHTML(){
   var swatches=THEMES.map(function(t){return'<button class="swatch'+(th===t.id?" active":"")+'" data-theme="'+t.id+'"><span class="dot" style="background:'+t.dot+'"></span><span>'+t.label+'</span></button>';}).join("");
   var layers=BG_LAYERS.map(function(l){return'<button class="bg-toggle'+(bgHas(l)?" active":"")+'" data-layer="'+l+'"><span>'+l+'</span><span class="tg-dot"></span></button>';}).join("");
   var cloakOpts=CLOAKS.map(function(c){return'<option value="'+c.id+'"'+(getCloak()===c.id?" selected":"")+'>'+c.title+'</option>';}).join("");
-  var transportBtns=TRANSPORTS.map(function(t){return'<button class="eng-btn'+(getTransport()===t?" active":"")+'" data-transport="'+t+'">'+t+'</button>';}).join("");
   return '<div class="settings-inner">'+
     '<div class="set-head"><h2>settings</h2><p>make velocity yours.</p></div>'+
     '<div class="card"><h3>theme</h3><p class="set-desc">pick a color mood.</p><div class="swatches">'+swatches+'</div></div>'+
     '<div class="card"><h3>background</h3><p class="set-desc">toggle the layers you want. meteor shower = all three. solid = none (freezes the last frame).</p><div class="bg-layers">'+layers+'</div><div class="bg-presets"><button class="bg-preset" data-preset="all">meteor shower</button><button class="bg-preset" data-preset="solid">solid</button></div></div>'+
-    '<div class="card"><h3>transport</h3><p class="set-desc">how the proxy talks to the server. epoxy is the default.</p><div class="eng-row">'+transportBtns+'</div></div>'+
     '<div class="card"><h3>cloak</h3><p class="set-desc">disguise the tab title.</p><select class="select-styled" id="cloakSelect">'+cloakOpts+'</select></div>'+
     '<div class="card"><h3>panic key</h3><p class="set-desc">press a key to instantly bail to a safe site.</p><div class="field-gap"><label class="field-label">key (single character)</label><input class="text-input" id="panicKeyInput" placeholder="e.g. q" maxlength="1" value="'+getPanicKey()+'" /></div><div><label class="field-label">redirect url</label><input class="text-input" id="panicUrlInput" placeholder="https://classroom.google.com" value="'+getPanicUrl()+'" /></div></div>'+
     '<div class="card"><h3>search</h3><p class="set-desc" style="margin-bottom:0">duckduckgo is the only search engine. no changing that.</p></div>'+
@@ -1626,11 +1600,6 @@ function wireSettings(){
     document.querySelectorAll("#curPanel .bg-toggle").forEach(function(x){x.classList.toggle("active",layers.indexOf(x.dataset.layer)!==-1);});
   };});
   var cloakSel=document.getElementById("cloakSelect");if(cloakSel)cloakSel.onchange=function(){setCloak(cloakSel.value);};
-  document.querySelectorAll("#curPanel .eng-btn").forEach(function(b){b.onclick=function(){
-    setTransportT(b.dataset.transport);
-    document.querySelectorAll("#curPanel .eng-btn").forEach(function(x){x.classList.toggle("active",x===b);});
-    applyTransport();
-  };});
   var pk=document.getElementById("panicKeyInput");if(pk)pk.oninput=function(){setPanicKey(pk.value.toLowerCase());};
   var pu=document.getElementById("panicUrlInput");if(pu)pu.oninput=function(){setPanicUrl(pu.value);};
 }
