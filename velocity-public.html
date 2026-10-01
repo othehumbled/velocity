@@ -169,6 +169,17 @@
   .settings-inner{max-width:520px;margin:0 auto;padding:28px 20px;height:100%;overflow-y:auto;box-sizing:border-box;display:flex;flex-direction:column;gap:14px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
   .settings-inner::-webkit-scrollbar{width:8px;}
   .settings-inner::-webkit-scrollbar-thumb{background:var(--line);border-radius:4px;}
+  .ai-top{display:flex;gap:10px;align-items:center;flex:none;}
+  .ai-top .select-styled{flex:1;}
+  .ai-chat{flex:1;min-height:0;display:flex;flex-direction:column;gap:10px;overflow-y:auto;padding-right:6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent;}
+  .ai-msg{max-width:78%;padding:10px 14px;border-radius:14px;font-size:13.5px;line-height:1.65;color:var(--text);white-space:pre-wrap;word-wrap:break-word;}
+  .ai-msg.user{align-self:flex-end;background:rgba(var(--accent-rgb),.16);border:1px solid rgba(var(--accent-rgb),.35);border-bottom-right-radius:4px;}
+  .ai-msg.bot{align-self:flex-start;background:rgba(var(--edge),.05);border:1px solid var(--line-soft);border-bottom-left-radius:4px;}
+  .ai-msg.err{align-self:center;color:#ff7a7a;background:rgba(255,90,90,.08);border:1px solid rgba(255,90,90,.25);font-size:12px;text-align:center;}
+  .ai-inrow{display:flex;gap:8px;align-items:flex-end;flex:none;}
+  .ai-inrow textarea{flex:1;resize:none;max-height:120px;min-height:40px;font-family:inherit;line-height:1.5;}
+  .ai-cursor{display:inline-block;width:7px;height:14px;background:var(--accent);vertical-align:-2px;animation:aiblink 1s steps(1) infinite;border-radius:1px;}
+  @keyframes aiblink{50%{opacity:0;}}
 .set-head{margin-bottom:6px;}
 .set-head h2{font-family:"Radio Canada Big",Georgia,serif;font-style:italic;font-size:32px;background:linear-gradient(to right,var(--text),var(--accent-2),var(--accent));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;color:transparent;line-height:1.1;}
 .set-head p{font-size:13px;color:var(--dim);margin-top:4px;}
@@ -227,6 +238,7 @@
   <button class="dicon" id="dLib" title="library"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="7" y2="11"/><line x1="15" x2="15.01" y1="11" y2="11"/><line x1="18" x2="18.01" y1="11" y2="11"/><path d="m17.32 5 1.6 3.1a2 2 0 0 0 1.5 1.1l3.4.5-2.5 2.4a2 2 0 0 0-.6 1.8l.6 3.4-3-1.6a2 2 0 0 0-1.9 0l-3 1.6.6-3.4a2 2 0 0 0-.6-1.8L9.5 9.7l3.4-.5a2 2 0 0 0 1.5-1.1L16 5"/></svg></button>
   <button class="dicon" id="dMov" title="movies"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18M17 3v18M3 7.5h4M3 12h18M3 16.5h4M17 7.5h4M17 16.5h4"/></svg></button>
   <button class="dicon" id="dEmb" title="html embedder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg></button>
+  <button class="dicon" id="dAI" title="ai chat"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg></button>
   <button class="dicon" id="dSet" title="settings"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg></button>
   <button class="dicon" id="dChg" title="changelog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 1 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg></button>
   <button class="dicon" id="dLeg" title="legal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg></button>
@@ -415,6 +427,7 @@ function syncDock(){
   document.getElementById("dHome").classList.toggle("active",at&&at.kind==="home");
   document.getElementById("dLib").classList.toggle("active",at&&at.kind==="library");
   document.getElementById("dMov").classList.toggle("active",at&&at.kind==="movies");
+  document.getElementById("dAI").classList.toggle("active",at&&at.kind==="ai");
   document.getElementById("dEmb").classList.toggle("active",at&&at.kind==="embedder");
   document.getElementById("dSet").classList.toggle("active",at&&at.kind==="settings");
   document.getElementById("dChg").classList.toggle("active",at&&at.kind==="changelog");
@@ -424,13 +437,14 @@ function openKind(kind){var ex=tabs.find(function(t){return t.kind===kind;});if(
 document.getElementById("dHome").onclick=function(){openKind("home");};
 document.getElementById("dLib").onclick=function(){openKind("library");};
 document.getElementById("dMov").onclick=function(){openKind("movies");};
+document.getElementById("dAI").onclick=function(){openKind("ai");};
 document.getElementById("dEmb").onclick=function(){openKind("embedder");};
 document.getElementById("dSet").onclick=function(){openKind("settings");};
 document.getElementById("dChg").onclick=function(){openKind("changelog");};
 document.getElementById("dLeg").onclick=function(){openKind("legal");};
 
 var _id=0;function nid(){return ++_id;}
-function makeTab(kind,opts){opts=opts||{};return{id:nid(),kind:kind,isGame:!!opts.isGame,title:opts.title||(kind==="home"?"new tab":kind==="library"?"library":kind==="movies"?"movies":kind==="embedder"?"embedder":kind==="settings"?"settings":kind==="legal"?"legal":"changelog"),history:[],idx:-1,src:"about:blank",reload:0,loading:false};}
+function makeTab(kind,opts){opts=opts||{};return{id:nid(),kind:kind,isGame:!!opts.isGame,title:opts.title||(kind==="home"?"new tab":kind==="library"?"library":kind==="movies"?"movies":kind==="ai"?"ai":kind==="embedder"?"embedder":kind==="settings"?"settings":kind==="legal"?"legal":"changelog"),history:[],idx:-1,src:"about:blank",reload:0,loading:false};}
 var tabs=[makeTab("home")],activeId=tabs[0].id;
 var frameArea=document.getElementById("frameArea"),iframeEls={};
 function activeTab(){return tabs.find(function(t){return t.id===activeId;});}
@@ -439,6 +453,7 @@ function iconFor(kind){
   if(kind==="library")return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><line x1="6" x2="10" y1="11" y2="11"/><line x1="8" x2="8" y1="7" y2="11"/><line x1="15" x2="15.01" y1="11" y2="11"/><line x1="18" x2="18.01" y1="11" y2="11"/><path d="m17.32 5 1.6 3.1a2 2 0 0 0 1.5 1.1l3.4.5-2.5 2.4a2 2 0 0 0-.6 1.8l.6 3.4-3-1.6a2 2 0 0 0-1.9 0l-3 1.6.6-3.4a2 2 0 0 0-.6-1.8L9.5 9.7l3.4-.5a2 2 0 0 0 1.5-1.1L16 5"/></svg>';
   if(kind==="settings")return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1Z"/></svg>';
   if(kind==="movies")return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><rect width="18" height="18" x="3" y="3" rx="2"/><path d="M7 3v18M17 3v18M3 7.5h4M3 12h18M3 16.5h4M17 7.5h4M17 16.5h4"/></svg>';
+  if(kind==="ai")return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/><path d="M5 3v4"/><path d="M19 17v4"/><path d="M3 5h4"/><path d="M17 19h4"/></svg>';
   if(kind==="changelog")return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="M3 3v5h5"/><path d="M3.05 13A9 9 0 1 1 6 5.3L3 8"/><path d="M12 7v5l4 2"/></svg>';
   if(kind==="embedder")return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>';
   if(kind==="legal")return'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:14px;height:14px"><path d="m16 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="m2 16 3-8 3 8c-.87.65-1.92 1-3 1s-2.13-.35-3-1Z"/><path d="M7 21h10"/><path d="M12 3v18"/><path d="M3 7h2c2 0 5-1 7-2 2 1 5 2 7 2h2"/></svg>';
@@ -493,6 +508,7 @@ function renderFrame(){
     else if(at.kind==="library")p.innerHTML=libHTML();
     else if(at.kind==="settings")p.innerHTML=settingsHTML();
     else if(at.kind==="movies")p.innerHTML=moviesHTML();
+    else if(at.kind==="ai")p.innerHTML=aiHTML();
     else if(at.kind==="embedder")p.innerHTML=embedderHTML();
     else if(at.kind==="legal")p.innerHTML=legalHTML();
     else if(at.kind==="changelog")p.innerHTML=changelogHTML();
@@ -501,6 +517,7 @@ function renderFrame(){
     if(at.kind==="library")wireLib();
     if(at.kind==="settings")wireSettings();
     if(at.kind==="movies")wireMovies();
+    if(at.kind==="ai")wireAI();
     if(at.kind==="embedder")wireEmbedder();
     if(at.kind==="changelog")wireChg();
   }
@@ -1606,6 +1623,88 @@ function wireLib(){
   search.oninput=render;sort.onchange=render;
 }
 
+// ---------- ai chat ----------
+var AI_KEYLESS=[{id:"openai-fast",label:"gpt-oss 20b (openai)"}];
+var AI_OR=[["google/gemma-4-31b-it:free","gemma 4 31b (google)"],["google/gemma-4-26b-a4b-it:free","gemma 4 26b (google)"],["qwen/qwen3.8-27b:free","qwen 3.8 27b (alibaba)"],["nvidia/nemotron-3-super-120b-a12b:free","nemotron 3 (nvidia)"],["inclusionai/ling-3.0-flash-sante:free","ling 3.0 flash"],["thinkingmachines/inkling-small:free","inkling small"],["dots-studio/dots-3-note-preview:free","dots 3 note"],["cohere/north-mini-code:free","north mini (cohere)"],["poolside/laguna-s-2.1:free","laguna s (poolside)"]];
+function getAIModel(){try{return localStorage.getItem("vel_ai_model")||"openai-fast";}catch(e){return"openai-fast";}}
+function setAIModel(v){try{localStorage.setItem("vel_ai_model",v);}catch(e){}}
+function getAIKey(){try{return localStorage.getItem("vel_ai_key")||"";}catch(e){return"";}}
+function setAIKey(v){try{v?localStorage.setItem("vel_ai_key",v):localStorage.removeItem("vel_ai_key");}catch(e){}}
+function escAI(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function aiTabMsgs(){var at=activeTab();if(!at.aiMsgs)at.aiMsgs=[];return at.aiMsgs;}
+function aiMsgsHTML(msgs){
+  if(!msgs.length)return'<div style="margin:auto;text-align:center;color:var(--muted);font-size:13px;line-height:1.7;padding:0 20px;">pick a model and say hi.<br>the default works with no key at all.<br>the openrouter group unlocks more models with a free key from openrouter.ai — paste it in the key field.</div>';
+  return msgs.map(function(m){var cls=m.role==="user"?"ai-msg user":(m.error?"ai-msg err":"ai-msg bot");return'<div class="'+cls+'">'+escAI(m.content)+(m.pending?'<span class="ai-cursor"></span>':'')+'</div>';}).join("");
+}
+function aiHTML(){
+  var m=getAIModel();
+  var opts='<optgroup label="free - no key needed">'+AI_KEYLESS.map(function(x){return'<option value="'+x.id+'"'+(m===x.id?" selected":"")+'>'+x.label+'</option>';}).join("")+'</optgroup>';
+  opts+='<optgroup label="openrouter - needs a free key">'+AI_OR.map(function(x){return'<option value="'+x[0]+'"'+(m===x[0]?" selected":"")+'>'+x[1]+'</option>';}).join("")+'</optgroup>';
+  return '<div class="settings-inner">'+
+    '<div class="set-head"><h2>ai chat</h2><p>free ai models. streaming replies, no sign-up.</p></div>'+
+    '<div class="ai-top"><select class="select-styled" id="aiModel">'+opts+'</select></div>'+
+    '<div><label class="field-label">openrouter key (optional - unlocks the group above)</label><input class="text-input" id="aiKey" type="password" placeholder="sk-or-..." autocomplete="off" value="'+escAI(getAIKey())+'"/></div>'+
+    '<div class="ai-chat" id="aiMsgs">'+aiMsgsHTML(aiTabMsgs())+'</div>'+
+    '<div class="ai-inrow"><textarea class="text-input" id="aiInput" rows="2" placeholder="ask anything... (enter to send)"></textarea><button class="eng-btn active" id="aiSend">send</button><button class="bg-preset" id="aiClear">clear</button></div>'+
+    '</div>';
+}
+function wireAI(){
+  var at=activeTab();if(!at)return;
+  var sel=document.getElementById("aiModel");if(sel)sel.onchange=function(){setAIModel(sel.value);};
+  var key=document.getElementById("aiKey");if(key)key.onchange=function(){setAIKey(key.value.trim());};
+  var inp=document.getElementById("aiInput");
+  if(inp){inp.onkeydown=function(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();aiSend();}};setTimeout(function(){try{inp.focus();}catch(e){}},0);}
+  var send=document.getElementById("aiSend");if(send)send.onclick=aiSend;
+  var clear=document.getElementById("aiClear");if(clear)clear.onclick=function(){at.aiMsgs=[];rerenderAI();};
+}
+function rerenderAI(){var at=activeTab();if(!at||at.kind!=="ai")return;var box=document.getElementById("aiMsgs");if(!box)return;box.innerHTML=aiMsgsHTML(aiTabMsgs());box.scrollTop=box.scrollHeight;}
+var aiBusy=false;
+function aiSend(){
+  if(aiBusy)return;
+  var at=activeTab();if(!at||at.kind!=="ai")return;
+  var inp=document.getElementById("aiInput");if(!inp)return;
+  var q=inp.value.trim();if(!q)return;
+  var msgs=aiTabMsgs(),model=getAIModel(),key=getAIKey();
+  if(model!=="openai-fast"&&!key){msgs.push({role:"assistant",content:"that model needs a free openrouter key. get one at openrouter.ai/settings/keys (create an account, it's free) and paste it in the key field above. until then, the default model works with no key.",error:true});rerenderAI();return;}
+  inp.value="";
+  msgs.push({role:"user",content:q});
+  var reply={role:"assistant",content:"",pending:true};
+  msgs.push(reply);
+  rerenderAI();
+  aiBusy=true;
+  var history=msgs.filter(function(m){return m!==reply&&!m.error;}).map(function(m){return{role:m.role,content:m.content};}).slice(-16);
+  var url,headers,body;
+  if(model==="openai-fast"){url="https://text.pollinations.ai/openai";headers={"Content-Type":"application/json"};body={model:model,messages:history,stream:true};}
+  else{url="https://openrouter.ai/api/v1/chat/completions";headers={"Content-Type":"application/json","Authorization":"Bearer "+key,"HTTP-Referer":location.origin,"X-Title":"Velocity"};body={model:model,messages:history,stream:true};}
+  function paint(){var box=document.getElementById("aiMsgs");if(!box)return;var last=box.lastElementChild;if(last)last.innerHTML=escAI(reply.content)+'<span class="ai-cursor"></span>';box.scrollTop=box.scrollHeight;}
+  fetch(url,{method:"POST",headers:headers,body:JSON.stringify(body)}).then(function(res){
+    if(!res.ok||!res.body)return res.text().then(function(t){throw new Error("http "+res.status+(t?" - "+String(t).slice(0,180):""));});
+    var reader=res.body.getReader(),dec=new TextDecoder(),buf="";
+    function pump(){
+      return reader.read().then(function(r){
+        if(r.done)return;
+        buf+=dec.decode(r.value,{stream:true});
+        var parts=buf.split("\n");buf=parts.pop();
+        parts.forEach(function(line){
+          line=line.trim();if(line.slice(0,5)!=="data:")return;
+          var d=line.slice(5).trim();if(d==="[DONE]")return;
+          try{var j=JSON.parse(d);var ch=j.choices&&j.choices[0];var delta=ch&&ch.delta;if(delta&&typeof delta.content==="string"&&delta.content)reply.content+=delta.content;}catch(e){}
+        });
+        paint();
+        return pump();
+      });
+    }
+    return pump();
+  }).catch(function(err){
+    reply.content=reply.content||("error: "+(err&&err.message||"request failed"));
+    if(!reply.content.length||reply.content.slice(0,6)==="error:")reply.error=true;
+  }).then(function(){
+    aiBusy=false;
+    delete reply.pending;
+    if(!reply.content)reply.content="(empty response - try again)";
+    rerenderAI();
+  });
+}
 function settingsHTML(){
   var th=getTheme();
   var swatches=THEMES.map(function(t){return'<button class="swatch'+(th===t.id?" active":"")+'" data-theme="'+t.id+'"><span class="dot" style="background:'+t.dot+'"></span><span>'+t.label+'</span></button>';}).join("");
