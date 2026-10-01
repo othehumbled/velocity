@@ -17,6 +17,7 @@ docker compose -f docker-compose.base44.yml up -d
 ## architecture
 
 - `velocity.html` — entire app: html, css, js in one file. tabbed browser ui with game library, themes, animated canvas backgrounds, cloak, panic key.
+- `ai.js` — ai chat module shared by both builds, loaded as a plain `<script src="ai.js">` right before the main inline script (globals: aiHTML/wireAI/aiSend). keep it OUT of the inline script: the base44 preview's element-injection mangles large inline scripts and leaks `data-brackets-id` attributes as visible text. keyless model = pollinations `openai-fast` (gpt-oss 20b, POST https://text.pollinations.ai/openai, SSE streaming); openrouter free models need a user key in localStorage `vel_ai_key`; model in `vel_ai_model`; rate limit 20 msgs/hour in `vel_ai_usage` (rolling window).
 - `server/server.js` — express + ultraviolet/bare/wisp proxy server
 - `proxy-sw.js` — ultraviolet service worker wrapper
 - games list is embedded inline in velocity.html (no network fetch for the library)
