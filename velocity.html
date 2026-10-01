@@ -500,6 +500,7 @@ function ensureIframe(t){
   frameArea.appendChild(f);iframeEls[t.id]=f;return f;
 }
 function setIframeSrc(t){var f=ensureIframe(t);var target=(t.kind==="web"&&!t.isGame&&window.__uv$config)?(__uv$config.prefix+__uv$config.encodeUrl(t.src)):t.src;if(t.reload){f.src="about:blank";setTimeout(function(){f.src=target;},0);}else{f.src=target;}}
+var aiLoadTried=false;
 function renderFrame(){
   tabs.forEach(function(t){var f=iframeEls[t.id];if(f)f.style.display="none";});
   var at=activeTab();
@@ -519,7 +520,11 @@ function renderFrame(){
     else if(at.kind==="library")p.innerHTML=libHTML();
     else if(at.kind==="settings")p.innerHTML=settingsHTML();
     else if(at.kind==="movies")p.innerHTML=moviesHTML();
-    else if(at.kind==="ai")p.innerHTML=aiHTML();
+    else if(at.kind==="ai"){
+      if(typeof aiHTML==="function")p.innerHTML=aiHTML();
+      else if(!aiLoadTried){aiLoadTried=true;p.innerHTML='<div class="home-inner"><div class="set-head" style="text-align:center;margin:auto"><h2>ai chat</h2><p id="aiLoadMsg">loading the ai module…</p></div></div>';var ls=document.createElement("script");ls.src="ai.js";ls.onload=renderFrame;ls.onerror=function(){var m=document.getElementById("aiLoadMsg");if(m)m.textContent="couldn't load the ai module - hard-refresh the page (ctrl+shift+r) and reopen this tab.";};document.head.appendChild(ls);}
+      else p.innerHTML='<div class="home-inner"><div class="set-head" style="text-align:center;margin:auto"><h2>ai chat</h2><p>the ai module failed to load - hard-refresh the page (ctrl+shift+r) and try again.</p></div></div>';
+    }
     else if(at.kind==="embedder")p.innerHTML=embedderHTML();
     else if(at.kind==="legal")p.innerHTML=legalHTML();
     else if(at.kind==="changelog")p.innerHTML=changelogHTML();
@@ -528,7 +533,7 @@ function renderFrame(){
     if(at.kind==="library")wireLib();
     if(at.kind==="settings")wireSettings();
     if(at.kind==="movies")wireMovies();
-    if(at.kind==="ai")wireAI();
+    if(at.kind==="ai"&&typeof wireAI==="function")wireAI();
     if(at.kind==="embedder")wireEmbedder();
     if(at.kind==="changelog")wireChg();
   }
